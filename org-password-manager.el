@@ -29,6 +29,11 @@
 
 ;;; Code:
 
+;; TODO: Make this work without ido completion enabled.
+;; TODO: Code review.
+;; TODO: README review. Note that org-passwords was included to org-contrib.
+;; TODO: Publish to MELPA.
+
 (require 'org)
 (require 's)
 
