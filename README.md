@@ -1,6 +1,8 @@
 org-password-manager
 ====================
 
+**Note**: This project is still in early draft version.
+
 Your Passwords in Plain Text
 ----------------------------
 
