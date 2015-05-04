@@ -126,7 +126,8 @@ line before running it."
          (generated-password (s-trim (shell-command-to-string pwgen-string))))
     (insert generated-password)
     (funcall interprogram-cut-function generated-password)
-    (message "Generated password inserted on buffer and securely copied to system's clipboard avoiding kill ring.")))
+    (run-at-time org-password-manager-default-password-wait-time nil (lambda () (funcall interprogram-cut-function "")))
+    (message (concat "Generated password inserted on buffer, securely copied to system's clipboard avoiding kill ring and will be removed in " org-password-manager-default-password-wait-time "."))))
 
 ;; Key bindings.
 

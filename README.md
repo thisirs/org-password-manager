@@ -91,7 +91,11 @@ C-c C-p u`.
 ### Generate password
 
 Type `C-c C-p g` (`org-password-manager-generate-password`) and the generated
-password will be inserted under the point on the buffer.
+password will be inserted under the point on the buffer. It's also copied to
+your clipboard. It tries to increase the security by skipping the kill ring and
+copying the password directly to the system's clipboard and by erasing it after
+30 seconds (this period is customizable, refer to the
+[Configuration](#configuration) section).
 
 If you want to customize the `pwgen` command before running it (e.g. you want a
 shorter password), use the `C-u` argument by typing `C-u C-c C-p g`.
