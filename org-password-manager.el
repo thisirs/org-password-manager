@@ -29,7 +29,6 @@
 
 ;;; Code:
 
-;; TODO: Make this work without ido completion enabled.
 ;; TODO: Code review.
 ;; TODO: README review. Note that org-passwords was included to org-contrib.
 ;; TODO: Publish to MELPA.
@@ -48,7 +47,10 @@
 
 If ASK-FOR-INPUT? is t, will ask for input even if point is on a
 heading that contains the property."
-  (let ((heading nil)
+  (let ((completing-read (if (fboundp 'ido-completing-read)
+                             'ido-completing-read
+                           'org-completing-read))
+        (heading nil)
         (property (org-entry-get (point) property-name t))
         (output-message nil))
     (if (and property (not ask-for-input?))
@@ -60,7 +62,7 @@ heading that contains the property."
                   (org-link-display-format (org-get-heading t t))
                   (org-entry-get (point) property-name)))
                (concat property-name "={.+}") 'agenda))
-             (chosen-heading (ido-completing-read (concat property-name " for: ")
+             (chosen-heading (funcall completing-read (concat property-name " for: ")
                                                   property-entries
                                                   nil
                                                   nil
