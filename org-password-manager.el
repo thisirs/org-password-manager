@@ -29,7 +29,6 @@
 
 ;;; Code:
 
-;; TODO: Make this work if header doesn't match.
 ;; TODO: Make this work without ido completion enabled.
 ;; TODO: Code review.
 ;; TODO: README review. Note that org-passwords was included to org-contrib.
@@ -51,7 +50,7 @@ If ASK-FOR-INPUT? is t, will ask for input even if point is on a
 heading that contains the property."
   (let ((heading nil)
         (property (org-entry-get (point) property-name t))
-        (success-message nil))
+        (output-message nil))
     (if (and property (not ask-for-input?))
         (setq heading (org-link-display-format (org-get-heading t t)))
       (let* ((property-entries
@@ -61,27 +60,34 @@ heading that contains the property."
                   (org-link-display-format (org-get-heading t t))
                   (org-entry-get (point) property-name)))
                (concat property-name "={.+}") 'agenda))
-             (header-property-list (assoc (ido-completing-read (concat property-name " for: ")
-                                                               property-entries
-                                                               nil
-                                                               nil
-                                                               nil
-                                                               'org-password-manager-history
-                                                               (car org-password-manager-history))
-                                          property-entries)))
-        (setq heading (nth 0 header-property-list)
-              property (nth 1 header-property-list))))
-    (if (string= property-name "PASSWORD")
-        (progn
-          (funcall interprogram-cut-function property)
-          (run-at-time "30 sec" nil (lambda () (funcall interprogram-cut-function "")))
-          (setq success-message
-                (concat property-name " for `" heading "' securely copied to system's clipboard avoiding kill ring and will be removed in 30 seconds.")))
-      (progn (kill-new property)
-             (setq success-message
-                   (concat property-name " for `" heading "' copied to clipboard."))))
-    (add-to-history 'org-password-manager-history heading)
-    (message success-message)))
+             (chosen-heading (ido-completing-read (concat property-name " for: ")
+                                                  property-entries
+                                                  nil
+                                                  nil
+                                                  nil
+                                                  'org-password-manager-history
+                                                  (car org-password-manager-history)))
+             (header-property-list (assoc chosen-heading property-entries)))
+        (if header-property-list
+            (setq heading (nth 0 header-property-list)
+                  property (nth 1 header-property-list))
+          (setq output-message (concat "Couldn't find `"
+                                       property-name
+                                       "' for `"
+                                       chosen-heading
+                                       "'.")))))
+    (if (and heading property)
+        (if (string= property-name "PASSWORD")
+            (progn
+              (funcall interprogram-cut-function property)
+              (run-at-time "30 sec" nil (lambda () (funcall interprogram-cut-function "")))
+              (setq output-message
+                    (concat property-name " for `" heading "' securely copied to system's clipboard avoiding kill ring and will be removed in 30 seconds.")))
+          (progn (kill-new property)
+                 (setq output-message
+                       (concat property-name " for `" heading "' copied to clipboard."))))
+      (add-to-history 'org-password-manager-history heading))
+    (message output-message)))
 
 (defun org-password-manager-get-username (&optional ask-for-input?)
   "Get username.
