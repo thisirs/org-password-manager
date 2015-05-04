@@ -19,7 +19,7 @@ Philosophy
 Features
 --------
 
-1. Use [Org mode][org mode] as password manager.
+1. Use [Org mode][org-mode] as password manager.
 2. Retrieve passwords in a practical and secure manner.
 3. Generate secure passwords.
 4. No configuration required.
