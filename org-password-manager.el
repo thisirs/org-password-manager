@@ -29,18 +29,25 @@
 
 ;;; Code:
 
-;; TODO: Code review.
-;; TODO: README review. Note that org-passwords was included to org-contrib.
-;; TODO: Publish to MELPA.
-
 (require 'org)
 (require 's)
 
-(defvar org-password-manager-history ()
-  "The history of headers that were chosen for `org-password-manager'.")
+(defgroup org-password-manager nil
+  "Minimal password manager for Emacs Org Mode."
+  :group 'org)
 
-(defvar org-password-manager-default-pwgen-command "pwgen --secure --symbols --capitalize --numerals 25 1"
-  "The default `pwgen' command to use when generating passwords.")
+(defcustom org-password-manager-default-pwgen-command "pwgen --secure --symbols --capitalize --numerals 25 1"
+  "The default `pwgen' command to use when generating passwords."
+  :group 'org-password-manager)
+
+(defcustom org-password-manager-default-password-wait-time "30 sec"
+  "The default period to wait before erasing the password from the clipboard.
+
+Must be compatible with `run-at-time'."
+  :group 'org-password-manager)
+
+(defvar org-password-manager-history ()
+  "The history of headings that were chosen for `org-password-manager'.")
 
 (defun org-password-manager-get-property (property-name &optional ask-for-input?)
   "Get PROPERTY-NAME.
@@ -82,9 +89,9 @@ heading that contains the property."
         (if (string= property-name "PASSWORD")
             (progn
               (funcall interprogram-cut-function property)
-              (run-at-time "30 sec" nil (lambda () (funcall interprogram-cut-function "")))
+              (run-at-time org-password-manager-default-password-wait-time nil (lambda () (funcall interprogram-cut-function "")))
               (setq output-message
-                    (concat display-property-name " for `" heading "' securely copied to system's clipboard avoiding kill ring and will be removed in 30 seconds.")))
+                    (concat display-property-name " for `" heading "' securely copied to system's clipboard avoiding kill ring and will be removed in " org-password-manager-default-password-wait-time ".")))
           (progn (kill-new property)
                  (setq output-message
                        (concat display-property-name " for `" heading "' copied to clipboard."))))
