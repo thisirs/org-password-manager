@@ -144,6 +144,7 @@ source.
 I appreciate the mentioned works and thank its authors.
 
 
+[org-mode]: http://orgmode.org/
 [emacs]: https://www.gnu.org/software/emacs/
 [org-password-manager]: https://github.com/leafac/org-password-manager
 [melpa]: http://melpa.org/
