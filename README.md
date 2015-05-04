@@ -138,7 +138,7 @@ in any special way.
 [Andrea Crotti's org-passwords][andrea-crotti] is more minimal than
 [org-password-manager][org-password-manager] aims to be. It only retrieves
 passwords for the entry under the point, generates passwords by calling
-[pwgen][pwge] and has almost no documentation, requiring the user to read the
+[pwgen][pwgen] and has almost no documentation, requiring the user to read the
 source.
 
 I appreciate the mentioned works and thank its authors.
