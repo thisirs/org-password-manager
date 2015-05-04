@@ -47,7 +47,8 @@
 
 If ASK-FOR-INPUT? is t, will ask for input even if point is on a
 heading that contains the property."
-  (let ((completing-read (if (fboundp 'ido-completing-read)
+  (let ((display-property-name (capitalize property-name))
+        (completing-read (if (fboundp 'ido-completing-read)
                              'ido-completing-read
                            'org-completing-read))
         (heading nil)
@@ -62,7 +63,7 @@ heading that contains the property."
                   (org-link-display-format (org-get-heading t t))
                   (org-entry-get (point) property-name)))
                (concat property-name "={.+}") 'agenda))
-             (chosen-heading (funcall completing-read (concat property-name " for: ")
+             (chosen-heading (funcall completing-read (concat display-property-name " for: ")
                                                   property-entries
                                                   nil
                                                   nil
@@ -73,21 +74,20 @@ heading that contains the property."
         (if header-property-list
             (setq heading (nth 0 header-property-list)
                   property (nth 1 header-property-list))
-          (setq output-message (concat "Couldn't find `"
-                                       property-name
-                                       "' for `"
+          (setq output-message (concat display-property-name
+                                       " for `"
                                        chosen-heading
-                                       "'.")))))
+                                       "' not found!")))))
     (if (and heading property)
         (if (string= property-name "PASSWORD")
             (progn
               (funcall interprogram-cut-function property)
               (run-at-time "30 sec" nil (lambda () (funcall interprogram-cut-function "")))
               (setq output-message
-                    (concat property-name " for `" heading "' securely copied to system's clipboard avoiding kill ring and will be removed in 30 seconds.")))
+                    (concat display-property-name " for `" heading "' securely copied to system's clipboard avoiding kill ring and will be removed in 30 seconds.")))
           (progn (kill-new property)
                  (setq output-message
-                       (concat property-name " for `" heading "' copied to clipboard."))))
+                       (concat display-property-name " for `" heading "' copied to clipboard."))))
       (add-to-history 'org-password-manager-history heading))
     (message output-message)))
 
