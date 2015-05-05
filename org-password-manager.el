@@ -163,6 +163,7 @@ heading that contains the property."
       (add-to-history 'org-password-manager-history heading))
     (message output-message)))
 
+;;;###autoload
 (defun org-password-manager-get-username (&optional ask-for-input?)
   "Get username.
 
@@ -171,6 +172,7 @@ heading that contains the username property."
   (interactive "P")
   (org-password-manager-get-property "USERNAME" ask-for-input?))
 
+;;;###autoload
 (defun org-password-manager-get-password (&optional ask-for-input?)
   "Get password.
 
@@ -179,6 +181,7 @@ heading that contains the password property."
   (interactive "P")
   (org-password-manager-get-property "PASSWORD" ask-for-input?))
 
+;;;###autoload
 (defun org-password-manager-generate-password (&optional edit-pwgen-string?)
   "Generate password.
 
@@ -196,6 +199,7 @@ line before running it."
 
 ;; Key bindings.
 
+;;;###autoload
 (defun org-password-manager-key-bindings ()
   "Binds keys for org-password-manager."
   (local-set-key (kbd "C-c C-p u") 'org-password-manager-get-username)
