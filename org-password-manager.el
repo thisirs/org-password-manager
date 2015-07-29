@@ -112,7 +112,10 @@ Must be compatible with `run-at-time'."
   :group 'org-password-manager)
 
 (defcustom org-password-manager-scope 'agenda
-  "Scope used to search in org buffers"
+  "The scope used to search in org buffers.
+
+Supported scopes are defined in `org-map-entries'. By default,
+the `agenda' scope searches through all agenda files."
   :group 'org-password-manager)
 
 (defvar org-password-manager-history ()
