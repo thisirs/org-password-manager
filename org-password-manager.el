@@ -124,12 +124,8 @@ Must be compatible with `run-at-time'."
 If ASK-FOR-INPUT? is t, will ask for input even if point is on a
 heading that contains the property."
   (let ((display-property-name (capitalize property-name))
-        (completing-read (if (fboundp 'ido-completing-read)
-                             'ido-completing-read
-                           'org-completing-read))
-        (heading nil)
         (property (org-entry-get (point) property-name t))
-        (output-message nil))
+        output-message heading)
     (if (and property (not ask-for-input?))
         (setq heading (org-link-display-format (org-get-heading t t)))
       (let* ((property-entries
@@ -138,14 +134,15 @@ heading that contains the property."
                  (list
                   (org-link-display-format (org-get-heading t t))
                   (org-entry-get (point) property-name)))
-             (chosen-heading (funcall completing-read (concat display-property-name " for: ")
-                                                  property-entries
-                                                  nil
-                                                  nil
-                                                  nil
-                                                  'org-password-manager-history
-                                                  (car org-password-manager-history)))
                (concat property-name "={.+}") org-password-manager-scope))
+             (chosen-heading (funcall 'org-completing-read
+                                      (concat display-property-name " for: ")
+                                      property-entries
+                                      nil
+                                      nil
+                                      nil
+                                      'org-password-manager-history
+                                      (car org-password-manager-history)))
              (header-property-list (assoc chosen-heading property-entries)))
         (if header-property-list
             (setq heading (nth 0 header-property-list)
