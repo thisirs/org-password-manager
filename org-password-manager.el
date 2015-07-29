@@ -111,6 +111,10 @@
 Must be compatible with `run-at-time'."
   :group 'org-password-manager)
 
+(defcustom org-password-manager-scope 'agenda
+  "Scope used to search in org buffers"
+  :group 'org-password-manager)
+
 (defvar org-password-manager-history ()
   "The history of headings that were chosen for `org-password-manager'.")
 
@@ -134,7 +138,6 @@ heading that contains the property."
                  (list
                   (org-link-display-format (org-get-heading t t))
                   (org-entry-get (point) property-name)))
-               (concat property-name "={.+}") 'agenda))
              (chosen-heading (funcall completing-read (concat display-property-name " for: ")
                                                   property-entries
                                                   nil
@@ -142,6 +145,7 @@ heading that contains the property."
                                                   nil
                                                   'org-password-manager-history
                                                   (car org-password-manager-history)))
+               (concat property-name "={.+}") org-password-manager-scope))
              (header-property-list (assoc chosen-heading property-entries)))
         (if header-property-list
             (setq heading (nth 0 header-property-list)
