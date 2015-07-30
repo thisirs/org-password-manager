@@ -44,6 +44,13 @@ configuration:
 If you want some other keybindings, refer to the body of the function
 `org-password-manager-key-bindings` for an example on how to do it.
 
+If you want [`ido`][ido] completion, enable the `org-completion-use-ido`
+variable by adding the following line to your [Emacs][emacs] configuration:
+
+```emacs-lisp
+(setq org-completion-use-ido t)
+```
+
 Usage
 -----
 
@@ -152,3 +159,4 @@ I appreciate the mentioned works and thank its authors.
 [andrea-crotti]: https://github.com/AndreaCrotti/org-passwords/
 [pwgen]: http://pwgen.sourceforge.net/
 [jorge-alfaro-murillo-org-contrib]: http://orgmode.org/cgit.cgi/org-mode.git/tree/contrib/lisp/org-passwords.el
+[ido]: https://www.gnu.org/software/emacs/manual/ido.html
