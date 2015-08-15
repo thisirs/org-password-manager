@@ -6,7 +6,7 @@
 ;; Version: 0.0.1
 ;; Keywords: password
 ;; URL: https://github.com/leafac/org-password-manager
-;; Package-Requires: ((org "8.2.10") (s "1.9.0"))
+;; Package-Requires: ((org "8.2.10"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -95,7 +95,17 @@
 ;;; Code:
 
 (require 'org)
-(require 's)
+
+(eval-and-compile
+  ;; Added in emacs 24.4
+  (unless (fboundp 'string-trim)
+    (defun string-trim (string)
+      "Back ported function."
+      (if (string-match "\\`[ \t\n\r]+" string)
+          (setq string (replace-match "" t t string)))
+      (if (string-match "[ \t\n\r]+\\'" string)
+          (replace-match "" t t string)
+        string))))
 
 (defgroup org-password-manager nil
   "Minimal password manager for Emacs Org Mode."
@@ -195,7 +205,7 @@ line before running it."
   (let* ((pwgen-string (if edit-pwgen-string?
                            (read-from-minibuffer "pwgen command to run: " org-password-manager-default-pwgen-command)
                          org-password-manager-default-pwgen-command))
-         (generated-password (s-trim (shell-command-to-string pwgen-string))))
+         (generated-password (string-trim (shell-command-to-string pwgen-string))))
     (insert generated-password)
     (funcall interprogram-cut-function generated-password)
     (run-at-time org-password-manager-default-password-wait-time nil (lambda () (funcall interprogram-cut-function "")))
