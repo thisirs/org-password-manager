@@ -154,7 +154,7 @@ heading that contains the property."
                                        " for `"
                                        chosen-heading
                                        "' not found!")))))
-    (if (and heading property)
+    (when (and heading property)
         (if (string= property-name "PASSWORD")
             (progn
               (funcall interprogram-cut-function property)
@@ -164,7 +164,7 @@ heading that contains the property."
           (progn (kill-new property)
                  (setq output-message
                        (concat display-property-name " for `" heading "' copied to clipboard."))))
-      (add-to-history 'org-password-manager-history heading))
+        (add-to-history 'org-password-manager-history heading))
     (message output-message)))
 
 ;;;###autoload
