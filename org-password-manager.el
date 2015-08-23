@@ -135,8 +135,8 @@ heading that contains the property."
               (org-map-entries
                (lambda ()
                  (list
-                  (org-link-display-format (org-get-heading t t))
-                  (org-entry-get (point) property-name)))
+                  (substring-no-properties (org-link-display-format (org-get-heading t t)))
+                  (substring-no-properties (org-entry-get (point) property-name))))
                (concat property-name "={.+}") org-password-manager-scope))
              (chosen-heading (funcall 'org-completing-read
                                       (concat display-property-name " for: ")
