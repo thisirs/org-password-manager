@@ -269,7 +269,6 @@
 ;;; Code:
 
 (require 'org)
-(require 's)
 
 (defgroup org-password-manager nil
   "Minimal password manager for Emacs Org Mode."
@@ -369,7 +368,7 @@ line before running it."
   (let* ((pwgen-string (if edit-pwgen-string?
                            (read-from-minibuffer "pwgen command to run: " org-password-manager-default-pwgen-command)
                          org-password-manager-default-pwgen-command))
-         (generated-password (s-trim (shell-command-to-string pwgen-string))))
+         (generated-password (string-trim (shell-command-to-string pwgen-string))))
     (insert generated-password)
     (funcall interprogram-cut-function generated-password)
     (run-at-time org-password-manager-default-password-wait-time nil (lambda () (funcall interprogram-cut-function "")))
