@@ -83,7 +83,7 @@ C-c C-p u`.
 
 ### Get password
 
-Type `C-c C-p u` (`org-password-manager-get-password`) and search for the title
+Type `C-c C-p p` (`org-password-manager-get-password`) and search for the title
 of the entry containing the `PASSWORD` property (e.g. "My favorite
 website"). Then it's going to be copied to your clipboard. It tries to increase
 the security by skipping the kill ring and copying the password directly to the
