@@ -278,7 +278,7 @@
   "The default `pwgen' command to use when generating passwords."
   :group 'org-password-manager)
 
-(defcustom org-password-manager-default-password-wait-time "30 sec"
+(defcustom org-password-manager-timeout "30 sec"
   "The default period to wait before erasing the password from the clipboard.
 
 Must be compatible with `run-at-time'."
@@ -331,9 +331,9 @@ heading that contains the property."
         (if (string= property-name "PASSWORD")
             (progn
               (funcall interprogram-cut-function property)
-              (run-at-time org-password-manager-default-password-wait-time nil (lambda () (funcall interprogram-cut-function "")))
+              (run-at-time org-password-manager-timeout nil (lambda () (funcall interprogram-cut-function "")))
               (setq output-message
-                    (concat display-property-name " for `" heading "' securely copied to system's clipboard avoiding kill ring and will be removed in " org-password-manager-default-password-wait-time ".")))
+                    (concat display-property-name " for `" heading "' securely copied to system's clipboard avoiding kill ring and will be removed in " org-password-manager-timeout ".")))
           (progn (kill-new property)
                  (setq output-message
                        (concat display-property-name " for `" heading "' copied to clipboard."))))
@@ -371,8 +371,8 @@ line before running it."
          (generated-password (string-trim (shell-command-to-string pwgen-string))))
     (insert generated-password)
     (funcall interprogram-cut-function generated-password)
-    (run-at-time org-password-manager-default-password-wait-time nil (lambda () (funcall interprogram-cut-function "")))
-    (message (concat "Generated password inserted on buffer, securely copied to system's clipboard avoiding kill ring and will be removed in " org-password-manager-default-password-wait-time "."))))
+    (run-at-time org-password-manager-timeout nil (lambda () (funcall interprogram-cut-function "")))
+    (message (concat "Generated password inserted on buffer, securely copied to system's clipboard avoiding kill ring and will be removed in " org-password-manager-timeout "."))))
 
 ;; Key bindings.
 
