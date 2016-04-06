@@ -311,14 +311,16 @@ heading that contains the property."
                   (org-link-display-format (org-get-heading t t))
                   (org-entry-get (point) property-name)))
                (concat property-name "={.+}") org-password-manager-scope))
-             (chosen-heading (funcall 'org-completing-read
-                                      (concat display-property-name " for: ")
-                                      property-entries
-                                      nil
-                                      nil
-                                      nil
-                                      'org-password-manager-history
-                                      (car org-password-manager-history)))
+             (chosen-heading
+              (let ((history-delete-duplicates t))
+                (funcall 'org-completing-read
+                         (concat display-property-name " for: ")
+                         property-entries
+                         nil
+                         nil
+                         nil
+                         'org-password-manager-history
+                         (car org-password-manager-history))))
              (header-property-list (assoc chosen-heading property-entries)))
         (if header-property-list
             (setq heading (nth 0 header-property-list)
@@ -336,8 +338,7 @@ heading that contains the property."
                     (concat display-property-name " for `" heading "' securely copied to system's clipboard avoiding kill ring and will be removed in " org-password-manager-timeout ".")))
           (progn (kill-new property)
                  (setq output-message
-                       (concat display-property-name " for `" heading "' copied to clipboard."))))
-      (add-to-history 'org-password-manager-history heading))
+                       (concat display-property-name " for `" heading "' copied to clipboard.")))))
     (message output-message)))
 
 ;;;###autoload
