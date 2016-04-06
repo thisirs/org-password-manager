@@ -375,6 +375,37 @@ line before running it."
     (message (concat "Generated password inserted on buffer, securely copied to system's clipboard avoiding kill ring and will be removed in " org-password-manager-timeout "."))))
 
 ;; Key bindings.
+(defvar org-password-manager-yank-password ()
+  "Store a lambda function that yield the password when called.")
+
+(defsubst org-password-manager-reset-password ()
+  (setq org-password-manager-yank-password 'ignore))
+
+(defun org-password-manager-store-password (password &optional timeout)
+  "Store a function in `org-password-manager-yank-password' that
+yield PASSWORD only once when called. Reset the password by
+setting this function to `ignore' after TIMEOUT."
+  (setq org-password-manager-yank-password
+        (lexical-let ((i 0) (password password))
+          (lambda ()
+            (if (> i 1)
+                (and (setq org-password-manager-yank-password 'ignore) nil)
+              (setq i (1+ i))
+              password))))
+  (when-let ((timeout (or timeout org-password-manager-timeout)))
+    (run-with-timer timeout nil 'org-password-manager-reset-password)))
+
+(defun org-password-manager-insert-password ()
+  "Insert a password found by calling
+`org-password-manager-yank-password'. If no password is present,
+yank instead."
+  (interactive)
+  (if-let (funcall org-password-manager-yank-password)
+      (insert it)
+    (yank)))
+
+(defun org-password-manager-read-passwd-keybinding ()
+  (define-key read-passwd-map (kbd "C-y") 'org-password-manager-insert-password))
 
 ;;;###autoload
 (defun org-password-manager-key-bindings ()
