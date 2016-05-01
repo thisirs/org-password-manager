@@ -145,6 +145,7 @@
 ;;   │   :USERNAME: leandro
 ;;   │   :PASSWORD: chunky-tempeh
 ;;   │   :END:
+;;   |
 ;;   │ * SSH key
 ;;   │   :PROPERTIES:
 ;;   │   :PASSWORD: tofu
