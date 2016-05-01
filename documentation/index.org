@@ -75,17 +75,18 @@
 
    Follow the example:
 
-   #+BEGIN_SRC org
+   #+BEGIN_EXAMPLE
      ,* [[http://example.com][My favorite website]]
        :PROPERTIES:
        :USERNAME: leandro
        :PASSWORD: chunky-tempeh
        :END:
+
      ,* SSH key
        :PROPERTIES:
        :PASSWORD: tofu
        :END:
-   #+END_SRC
+   #+END_EXAMPLE
 
 ** Get username
 
