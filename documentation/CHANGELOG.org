@@ -1,0 +1,32 @@
+#+TITLE: Change Log
+
+This file documents all notable changes to this project.
+
+It follows recommendations from [[http://keepachangelog.com/][/Keep a CHANGELOG/]]. This project adheres to
+[[http://semver.org/][/Semantic Versioning/]]. Each released version is a Git tag.
+
+#+TOC: headlines
+
+# Sample release:
+#
+# * 0.0.1 · 2016-02-23
+
+* Unreleased
+
+** Added
+
+** Changed
+
+** Deprecated
+
+** Removed
+
+** Fixed
+
+** Security
+
+* 0.0.1 · 2015-07-29
+
+** Added
+
+   - Minimal core functionality.
