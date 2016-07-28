@@ -6,7 +6,7 @@
 ;; Version: 0.0.1
 ;; Keywords: password
 ;; URL: https://git.leafac.com/leafac/org-password-manager
-;; Package-Requires: ((org "8.2.10") (s "1.9.0"))
+;; Package-Requires: ((org "8.2.10"))
 
 ;; This file is not part of GNU Emacs.
 
