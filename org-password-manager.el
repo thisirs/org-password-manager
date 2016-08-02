@@ -401,7 +401,7 @@ setting this function to `ignore' after TIMEOUT."
 `org-password-manager-yank-password'. If no password is present,
 yank instead."
   (interactive)
-  (if-let (funcall org-password-manager-yank-password)
+  (if-let (it (funcall org-password-manager-yank-password))
       (insert it)
     (yank)))
 
