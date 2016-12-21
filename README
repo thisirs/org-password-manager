@@ -1,0 +1,57 @@
+org-password-manager
+--------------------
+
+Password manager for Org Mode.
+
+
+VERSION
+
+0.0.1
+https://www.leafac.com/projects/org-password-manager/CHANGELOG
+
+
+DOCUMENTATION
+
+https://www.leafac.com/projects/org-password-manager
+
+
+LICENSE
+
+GNU General Public License Version 3
+https://gnu.org/licenses/gpl-3.0.txt
+
+
+CODE OF CONDUCT
+
+Contributor Covenant v1.4.0
+http://contributor-covenant.org/version/1/4/
+
+
+DISTRIBUTION
+
+MELPA
+http://melpa.org/#/org-password-manager
+
+
+SOURCE
+
+https://git.leafac.com/org-password-manager
+
+
+BUG REPORTS
+
+Write emails to <org-password-manager@leafac.com>.
+
+
+CONTRIBUTIONS
+
+Send patches (https://git-scm.com/docs/git-format-patch) and pull requests
+(https://git-scm.com/docs/git-request-pull) via email to
+<org-password-manager@leafac.com>.
+
+
+AUTHOR
+
+Leandro Facchinetti <me@leafac.com>
+https://www.leafac.com
+GPG: 0x5925D0683DF3D583
