@@ -1,4 +1,4 @@
-;;; org-password-manager.el --- Minimal password manager for Emacs Org Mode.
+;;; org-password-manager.el --- Password manager for Org Mode.
 
 ;; Copyright (C) 2015 - Leandro Facchinetti <me@leafac.com>
 
