@@ -21,13 +21,64 @@
 
 @section[#:tag "overview"]{Overview}
 
+@margin-note{Use @hyperlink["https://gnupg.org/"]{GnuPG} to encrypt the Org Mode files that contains credentials instead of storing sensitive information in plain text.}
+
+Use @hyperlink["http://orgmode.org/"]{Org Mode} files to store credentials and retrieve them securely. Integrate with @hyperlink["https://sourceforge.net/projects/pwgen/"]{pwgen} to generate passwords.
+
 @section[#:tag "installation"]{Installation}
+
+Available from @hyperlink["http://melpa.org/#/org-password-manager"]{MELPA}, add the repository to Emacs and install with @tt{M-x package-install}. Password creation requires @hyperlink["https://sourceforge.net/projects/pwgen/"]{pwgen}.
 
 @section[#:tag "usage"]{Usage}
 
-@section[#:tag "deployment"]{Deployment}
+@margin-note{This section assumes the @seclink["configuration"]{default configuration}.}
+
+Add credentials as properties named @tt{USERNAME} and @tt{PASSWORD} to headings in Org Mode files. For example:
+
+@nested[#:style 'code-inset @verbatim{
+* [[http://example.com][My favorite website]]
+  :PROPERTIES:
+  :USERNAME: leandro
+  :PASSWORD: chunky-tempeh
+  :END:
+
+* SSH key
+  :PROPERTIES:
+  :PASSWORD: tofu
+  :END:
+                                      }]
+
+@margin-note{Passwords are cleared from the clipboard after 30 seconds.}
+
+Retrieve usernames with @tt{C-c C-p u} (@tt{org-password-manager-get-username}) and passwords with @tt{C-c C-p p} (@tt{org-password-manager-get-password}). If point is not under a heading that contains credentials, Org Password Manager asks for a heading. To force this behavior even when the point is under a heading that contains credentials, use the @tt{C-u} argument (for example, @tt{C-u C-c C-p u}).
+
+Generate passwords with @tt{C-c C-p g} (@tt{org-password-manager-generate-password}). To customize the parameters to pwgen, use the @tt{C-u} argument (@tt{C-u C-c C-p g}).
 
 @section[#:tag "configuration"]{Configuration}
+
+For the default configuration with the keybindings covered in the @seclink["usage"]{Usage section}, add the following to the Emacs configuration:
+
+@racketblock[
+ (add-hook 'org-mode-hook 'org-password-manager-key-bindings)
+ ]
+
+To customize the key bindings, start with the following code:
+
+@racketblock[
+ (defun org-password-manager-key-bindings ()
+   "Binds keys for org-password-manager."
+   (local-set-key (kbd "C-c C-p u") 'org-password-manager-get-username)
+   (local-set-key (kbd "C-c C-p p") 'org-password-manager-get-password)
+   (local-set-key (kbd "C-c C-p g") 'org-password-manager-generate-password))
+ ]
+
+For @hyperlink["https://www.gnu.org/software/emacs/manual/ido.html"]{Interactive Do (ido)} support, add the following to the Emacs configuration:
+
+@racketblock[
+ (setq org-completion-use-ido t)
+ ]
+
+For advanced configuration, refer to @tt{M-x customize-group org-password-manager}.
 
 @section[#:tag "changelog"]{Changelog}
 
