@@ -3,12 +3,12 @@
 documentation: compiled-documentation/index.html
 
 compiled-documentation/index.html: documentation/org-password-manager.scrbl
-	raco scribble --dest compiled-documentation/ --dest-name index -- documentation/org-password-manager.scrbl
+	cd documentation && raco scribble --dest ../compiled-documentation/ --dest-name index -- org-password-manager.scrbl
 
 documentation/text: documentation/org-password-manager.txt
 
 documentation/org-password-manager.txt: documentation/org-password-manager.scrbl
-	raco scribble --dest documentation/ --text -- documentation/org-password-manager.scrbl
+	cd documentation && raco scribble --text -- org-password-manager.scrbl
 
 documentation/deploy: documentation
 	rsync -av --delete compiled-documentation/ leafac.com:leafac.com/websites/software/org-password-manager/
