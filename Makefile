@@ -1,19 +1,14 @@
-.PHONY: documentation documentation/text documentation/deploy documentation/clean clean
+.PHONY: documentation documentation/text documentation/deploy
 
-documentation: compiled-documentation/index.html
+project = org-password-manager
 
-compiled-documentation/index.html: documentation/org-password-manager.scrbl
-	cd documentation && raco scribble --dest ../compiled-documentation/ --dest-name index -- org-password-manager.scrbl
+documentation: documentation/index.html documentation/$(project).txt
 
-documentation/text: documentation/org-password-manager.txt
+documentation/index.html: documentation/$(project).scrbl
+	cd documentation && raco scribble --dest-name index -- $(project).scrbl
 
-documentation/org-password-manager.txt: documentation/org-password-manager.scrbl
-	cd documentation && raco scribble --text -- org-password-manager.scrbl
+documentation/$(project).txt: documentation/$(project).scrbl
+	cd documentation && raco scribble --text -- $(project).scrbl
 
 documentation/deploy: documentation
-	rsync -av --delete compiled-documentation/ leafac.com:leafac.com/websites/software/org-password-manager/
-
-documentation/clean:
-	rm -rf compiled-documentation
-
-clean: documentation/clean
+	rsync -av --delete documentation/ leafac.com:leafac.com/websites/software/$(project)/
